@@ -8,7 +8,7 @@ public final class NetServiceTools {
 		
 		StringBuilder stringBuilder = new StringBuilder();
 		
-		stringBuilder.append(method.getDeclaringClass().getName());
+		stringBuilder.append(method.getDeclaringClass().getSimpleName());
 		stringBuilder.append(".");
 		stringBuilder.append(method.getName());
 		

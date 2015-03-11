@@ -24,9 +24,9 @@ public class MonitorInterceptorTest extends AbstractJUnit4SpringContextTests {
 		
 		Random random = new Random();
 		
-		for (int i=0; i<100; i++) {
+		for (int i=0; i<10; i++) {
 			invoke();
-			Thread.sleep(random.nextInt(10) * 1000);
+			Thread.sleep(random.nextInt(3000));
 		}
 	}
 	
