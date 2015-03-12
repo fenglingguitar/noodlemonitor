@@ -2,42 +2,16 @@ package org.fl.noodlemonitor.console.web.controller.performance;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-//import org.fl.noodle.common.connect.expand.monitor.constent.ModuleType;
 import org.fl.noodle.common.mvc.annotation.NoodleResponseBody;
-/*import org.fl.noodlecall.console.service.ClientService;
-import org.fl.noodlecall.console.service.MethodService;
-import org.fl.noodlecall.console.service.ServerService;
-import org.fl.noodlecall.console.service.ServiceGroupService;
-import org.fl.noodlecall.console.service.ServiceService;
-import org.fl.noodlecall.console.util.ConsoleConstant;
-import org.fl.noodlecall.console.vo.ClientVo;
-import org.fl.noodlecall.console.vo.MethodVo;
-import org.fl.noodlecall.console.vo.ServerVo;
-import org.fl.noodlecall.console.vo.ServiceGroupVo;
-import org.fl.noodlecall.console.vo.ServiceVo;*/
+import org.fl.noodlemonitor.console.web.persistence.BuildTree;
 
 @Controller
 @RequestMapping(value = "monitor/server/tree")
 public class ServerTreeController {
-	
-	/*@Autowired
-	private ServiceService serviceService;
-	
-	@Autowired
-	private MethodService methodService;
-	
-	@Autowired
-	private ServiceGroupService serviceGroupService;
-	
-	@Autowired
-	private ClientService clientService;
-	
-	@Autowired
-	private ServerService serverService;*/
 	
 	@RequestMapping(value = "/querynull")
 	@NoodleResponseBody
@@ -46,34 +20,44 @@ public class ServerTreeController {
 		return treeVoList;
 	}
 	
-	/*@RequestMapping(value = "/queryservicelist")
+	@RequestMapping(value = "/queryservicelist")
 	@NoodleResponseBody
 	public List<TreeVo> queryServiceList(String queryInfo) throws Exception {
 		
 		List<TreeVo> treeVoList = new ArrayList<TreeVo>();
 		
-		ServiceVo serviceVo = new ServiceVo();
-		serviceVo.setManual_Status(ConsoleConstant.MANUAL_STATUS_YES);
+		String serviceName = null;
 		if (queryInfo != null && !queryInfo.equals("")) {
 			String[] queryInfos = queryInfo.split("\\.");
 			if (queryInfos.length > 0) {
-				serviceVo.setService_Name(queryInfos[0]);
+				serviceName = queryInfos[0];
 			}
 		}
-		List<ServiceVo> serviceVoList = serviceService.queryServicePage(serviceVo, 0, 0).getData();
-		for (ServiceVo serviceVoIt : serviceVoList) {
-			TreeVo treeVo = new TreeVo();
-			treeVo.setId(serviceVoIt.getService_Name());
-			treeVo.setLabel(serviceVoIt.getService_Name());
-			treeVo.setPid("SERVICE");
-			treeVo.setUrl("monitor/server/tree/querymethodlist");
-			treeVoList.add(treeVo);
+		Set<String> serviceSet = BuildTree.ipMap.keySet();
+		for (String serviceNameIt : serviceSet) {
+			if (serviceName == null) {
+				TreeVo treeVo = new TreeVo();
+				treeVo.setId(serviceNameIt);
+				treeVo.setLabel(serviceNameIt);
+				treeVo.setPid("SERVICE");
+				treeVo.setUrl("monitor/server/tree/querymethodlist");
+				treeVoList.add(treeVo);
+			} else {
+				if (serviceNameIt.toUpperCase().contains(serviceName.toUpperCase())) {
+					TreeVo treeVo = new TreeVo();
+					treeVo.setId(serviceNameIt);
+					treeVo.setLabel(serviceNameIt);
+					treeVo.setPid("SERVICE");
+					treeVo.setUrl("monitor/server/tree/querymethodlist");
+					treeVoList.add(treeVo);
+				}
+			}
 		}
 		
 		return treeVoList;
 	}
 	
-	@RequestMapping(value = "/querymethodlist")
+	/*@RequestMapping(value = "/querymethodlist")
 	@NoodleResponseBody
 	public List<TreeVo> queryMethodList(String queryInfo, String pid) throws Exception {
 		
