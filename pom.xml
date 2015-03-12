@@ -23,6 +23,7 @@
 	
   	<noodlemonitor.console.web.version>1.0.0</noodlemonitor.console.web.version>
 	<noodlemonitor.client.version>1.0.0</noodlemonitor.client.version>
+	<noodlemonitor.client.demo.version>1.0.0</noodlemonitor.client.demo.version>
 	
   </properties>
 
