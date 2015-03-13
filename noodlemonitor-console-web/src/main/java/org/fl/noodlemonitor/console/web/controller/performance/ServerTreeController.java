@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.fl.noodle.common.connect.expand.monitor.constent.ModuleType;
+import org.fl.noodle.common.connect.expand.monitor.constent.MonitorType;
 import org.fl.noodle.common.mvc.annotation.NoodleResponseBody;
 import org.fl.noodlemonitor.console.web.persistence.BuildTree;
 
@@ -39,16 +41,16 @@ public class ServerTreeController {
 				TreeVo treeVo = new TreeVo();
 				treeVo.setId(serviceNameIt);
 				treeVo.setLabel(serviceNameIt);
-				treeVo.setPid("SERVICE");
-				treeVo.setUrl("monitor/server/tree/querymethodlist");
+				treeVo.setPid(MonitorType.CONNECT.getCode());
+				treeVo.setUrl("monitor/server/tree/queryserverlist");
 				treeVoList.add(treeVo);
 			} else {
 				if (serviceNameIt.toUpperCase().contains(serviceName.toUpperCase())) {
 					TreeVo treeVo = new TreeVo();
 					treeVo.setId(serviceNameIt);
 					treeVo.setLabel(serviceNameIt);
-					treeVo.setPid("SERVICE");
-					treeVo.setUrl("monitor/server/tree/querymethodlist");
+					treeVo.setPid(MonitorType.CONNECT.getCode());
+					treeVo.setUrl("monitor/server/tree/queryserverlist");
 					treeVoList.add(treeVo);
 				}
 			}
@@ -57,103 +59,67 @@ public class ServerTreeController {
 		return treeVoList;
 	}
 	
-	/*@RequestMapping(value = "/querymethodlist")
+	@RequestMapping(value = "/queryserverlist")
 	@NoodleResponseBody
-	public List<TreeVo> queryMethodList(String queryInfo, String pid) throws Exception {
+	public List<TreeVo> queryMethodList(String pid) throws Exception {
+		
+		List<TreeVo> treeVoList = new ArrayList<TreeVo>();
+		Set<String> ipSet = BuildTree.ipMap.get(pid);
+		if (ipSet != null) {
+			for (String ip : ipSet) {
+				TreeVo treeVo = new TreeVo();
+				treeVo.setId(ip);
+				treeVo.setLabel(ip);
+				treeVo.setPid(pid);
+				treeVo.setUrl("monitor/server/tree/querymethodlist");
+				treeVoList.add(treeVo);
+			}
+		}
+		
+		return treeVoList;
+	}
+	
+	@RequestMapping(value = "/querymethodlist")
+	@NoodleResponseBody
+	public List<TreeVo> queryMethodList(String queryInfo, String pid, String ppid) throws Exception {
 		
 		List<TreeVo> treeVoList = new ArrayList<TreeVo>();
 		
-		MethodVo methodVo = new MethodVo();
-		methodVo.setService_Name(pid);
-		methodVo.setManual_Status(ConsoleConstant.MANUAL_STATUS_YES);
+		String methodName = null;
 		if (queryInfo != null && !queryInfo.equals("")) {
 			String[] queryInfos = queryInfo.split("\\.");
 			if (queryInfos.length > 1) {
-				methodVo.setMethod_Name(queryInfos[1]);
+				methodName = queryInfos[1];
 			}
 		}
-		List<MethodVo> methodVoList = methodService.queryMethodPage(methodVo, 0, 0).getData();
-		for (MethodVo methodVoIt : methodVoList) {
-			TreeVo treeVo = new TreeVo();
-			treeVo.setId(methodVoIt.getMethod_Name());
-			treeVo.setLabel(methodVoIt.getMethod_Name());
-			treeVo.setPid(pid);
-			treeVo.setUrl("monitor/server/tree/querygrouplist");
-			treeVoList.add(treeVo);
+		
+		Set<String> methodSet = BuildTree.methodMap.get(ppid);
+		for (String methodNameIt : methodSet) {
+			if (methodName == null) {
+				TreeVo treeVo = new TreeVo();
+				treeVo.setId(methodNameIt);
+				treeVo.setLabel(methodNameIt);
+				treeVo.setPid(pid);
+				treeVo.setOther(ModuleType.SERVER.getCode());
+				treeVo.setUrl("monitor/server/tree/querynull");
+				treeVo.setEnableHighlight("true");
+				treeVo.setLoad("true");
+				treeVoList.add(treeVo);
+			} else {
+				if (methodNameIt.toUpperCase().contains(methodName.toUpperCase())) {
+					TreeVo treeVo = new TreeVo();
+					treeVo.setId(methodNameIt);
+					treeVo.setLabel(methodNameIt);
+					treeVo.setPid(pid);
+					treeVo.setOther(ModuleType.SERVER.getCode());
+					treeVo.setUrl("monitor/server/tree/querynull");
+					treeVo.setEnableHighlight("true");
+					treeVo.setLoad("true");
+					treeVoList.add(treeVo);
+				}
+			}
 		}
 		
 		return treeVoList;
 	}
-	
-	@RequestMapping(value = "/querygrouplist")
-	@NoodleResponseBody
-	public List<TreeVo> queryGroupList(String pid, String ppid) throws Exception {
-		
-		List<TreeVo> treeVoList = new ArrayList<TreeVo>();
-		
-		ServiceGroupVo serviceGroupVo = new ServiceGroupVo();
-		serviceGroupVo.setService_Name(ppid);
-		serviceGroupVo.setManual_Status(ConsoleConstant.MANUAL_STATUS_YES);
-		List<ServiceGroupVo> serviceGroupVoList = serviceGroupService.queryServiceGroupList(serviceGroupVo);
-		for (ServiceGroupVo serviceGroupVoIt : serviceGroupVoList) {
-			TreeVo treeVo = new TreeVo();
-			treeVo.setId(serviceGroupVoIt.getGroup_Name());
-			treeVo.setLabel(serviceGroupVoIt.getGroup_Name());
-			treeVo.setPid(pid);
-			treeVo.setUrl("monitor/server/tree/queryclientlist");
-			treeVoList.add(treeVo);
-		}
-		
-		return treeVoList;
-	}
-	
-	@RequestMapping(value = "/queryclientlist")
-	@NoodleResponseBody
-	public List<TreeVo> queryClientList(String pid, String pppid) throws Exception {
-		
-		List<TreeVo> treeVoList = new ArrayList<TreeVo>();
-		
-		ClientVo clientVo = new ClientVo();
-		clientVo.setService_Name(pppid);
-		clientVo.setGroup_Name(pid);
-		clientVo.setManual_Status(ConsoleConstant.MANUAL_STATUS_YES);
-		List<ClientVo> clientVoList = clientService.queryClientList(clientVo);
-		for (ClientVo clientVoIt : clientVoList) {
-			TreeVo treeVo = new TreeVo();
-			treeVo.setId(String.valueOf(clientVoIt.getClient_Id()));
-			treeVo.setLabel(clientVoIt.getClient_Name() + "-" + clientVoIt.getIp().substring(clientVoIt.getIp().lastIndexOf(".", clientVoIt.getIp().lastIndexOf(".") - 1) + 1));
-			treeVo.setPid(pid);
-			treeVo.setOther(ModuleType.CLIENT.getCode());
-			treeVo.setUrl("monitor/server/tree/queryserverlist");
-			treeVoList.add(treeVo);
-		}
-		
-		return treeVoList;
-	}
-	
-	@RequestMapping(value = "/queryserverlist")
-	@NoodleResponseBody
-	public List<TreeVo> queryServerList(String pid, String ppid, String ppppid) throws Exception {
-		
-		List<TreeVo> treeVoList = new ArrayList<TreeVo>();
-		
-		ServerVo serverVo = new ServerVo();
-		serverVo.setService_Name(ppppid);
-		serverVo.setGroup_Name(ppid);
-		serverVo.setManual_Status(ConsoleConstant.MANUAL_STATUS_YES);
-		List<ServerVo> serverVoList = serverService.queryServerList(serverVo);
-		for (ServerVo serverVoIt : serverVoList) {
-			TreeVo treeVo = new TreeVo();
-			treeVo.setId(String.valueOf(serverVoIt.getServer_Id()));
-			treeVo.setLabel(serverVoIt.getServer_Name() + "-" + serverVoIt.getIp().substring(serverVoIt.getIp().lastIndexOf(".", serverVoIt.getIp().lastIndexOf(".") - 1) + 1));
-			treeVo.setPid(pid);
-			treeVo.setOther(ModuleType.SERVER.getCode());
-			treeVo.setUrl("monitor/server/tree/querynull");
-			treeVo.setEnableHighlight("true");
-			treeVo.setLoad("true");
-			treeVoList.add(treeVo);
-		}
-		
-		return treeVoList;
-	}*/
 }

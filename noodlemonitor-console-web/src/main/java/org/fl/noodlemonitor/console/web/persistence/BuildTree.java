@@ -94,7 +94,7 @@ public class BuildTree {
 					Thread.sleep(intervalTime);
 				} catch (InterruptedException e) {
 					if (logger.isErrorEnabled()) {						
-						logger.error("HeartBeatAliveTasksScan -> run -> HeartBeatAliveTasksScan InterruptedException, Exception: " + e);
+						logger.error("BuildTreeRunnable -> Thread.sleep -> intervalTime:{}, Exception:", intervalTime, e);
 					}
 				}
 			}
