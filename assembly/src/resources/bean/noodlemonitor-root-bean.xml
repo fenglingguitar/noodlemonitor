@@ -11,9 +11,7 @@
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd"
 	default-autowire="byName">
 	
-	<import resource="classpath:org/fl/noodle/common/monitor/performance/receiver/noodlecommon-monitor-performance-receiver.xml" />
-	<import resource="classpath:org/fl/noodle/common/monitor/performance/schedule/noodlecommon-monitor-performance-clean-schedule.xml" />
-	
-	<bean id="buildTree" class="org.fl.noodlemonitor.console.web.persistence.BuildTree" init-method="start" />
+	<import resource="classpath:bean/noodlemonitor-monitor-performance.xml" />
+	<import resource="classpath:bean/noodlemonitor-console-web-bean.xml" />
 	
 </beans>

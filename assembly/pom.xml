@@ -9,16 +9,20 @@
     <version>1.0.0</version>
   </parent>
   
-  <groupId>org.fl.noodlemonitor.console.web</groupId>
-  <artifactId>noodlemonitor-console-web</artifactId>
-  <version>${noodlemonitor.console.web.version}</version>
-  <packaging>war</packaging>
-  <name>noodlemonitor-console-web Maven Webapp</name>
+  <groupId>org.fl.noodlemonitor.assembly</groupId>
+  <artifactId>assembly</artifactId>
+  <version>${noodlemonitor.assembly.version}</version>
+  <packaging>pom</packaging>
+  <name>assembly</name>
   <url>http://maven.apache.org</url>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   
   <dependencies>
   
-	<dependency>
+    <dependency>
 		<groupId>org.fl.noodle.common.mvc</groupId>
 		<artifactId>noodlecommon-mvc</artifactId>
 	</dependency>
@@ -114,32 +118,71 @@
 		<groupId>taglibs</groupId>
 		<artifactId>standard</artifactId>
 	</dependency>
-    
+	
   </dependencies>
   
   <build>
-  	
-    <finalName>noodlemonitor-console-web</finalName>
-    
+
+	<finalName>${noodlemonitor.name}-${noodlemonitor.version}</finalName>
+
     <plugins>
-				
+      <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-assembly-plugin</artifactId>
+			<executions>
+				<execution>
+					<id>assembly</id>
+					<phase>package</phase>
+					<goals>
+					  <goal>single</goal>
+					</goals>
+					<configuration>
+					  <descriptors>
+						 <descriptor>src/main/descriptors/war.xml</descriptor>
+					  </descriptors>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+		
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-install-plugin</artifactId>
-			<configuration>
-				<skip>true</skip>
-			</configuration>
+			<artifactId>maven-antrun-plugin</artifactId>
+			<executions>
+				<execution>
+					<id>rename-war</id>
+					<phase>package</phase>
+					<goals>
+						<goal>run</goal>
+					</goals>
+					<configuration>
+						<tasks>
+							<copy file="${project.build.directory}/${parent.artifactId}-${project.version}.war" tofile="${project.build.directory}/${parent.artifactId}.war"/>
+							<delete file="${project.build.directory}/${parent.artifactId}-${project.version}.war"/>
+						</tasks>
+					</configuration>
+				</execution>
+			</executions>
 		</plugin>
+
+	    <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-install-plugin</artifactId>
+	      <configuration>
+	        <skip>true</skip>
+	      </configuration>
+	    </plugin>
+			
+			<plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-deploy-plugin</artifactId>
+	      <configuration>
+	        <skip>true</skip>
+	      </configuration>
+	    </plugin>
+	    	    
+    </plugins>
 	
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-deploy-plugin</artifactId>
-			<configuration>
-				<skip>true</skip>
-			</configuration>
-		</plugin>
-	</plugins>
-    
   </build>
   
 </project>

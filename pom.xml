@@ -14,16 +14,20 @@
     <module>noodlemonitor-client</module>
     <module>noodlemonitor-client-demo</module>
     <module>noodlemonitor-console-web</module>
+    <module>assembly</module>
   </modules>
   
   <properties>
   
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	
+	<noodlemonitor.name>noodlemonitor</noodlemonitor.name>
 	<noodlemonitor.version>1.0.0</noodlemonitor.version>
 	
   	<noodlemonitor.console.web.version>1.0.0</noodlemonitor.console.web.version>
 	<noodlemonitor.client.version>1.0.0</noodlemonitor.client.version>
 	<noodlemonitor.client.demo.version>1.0.0</noodlemonitor.client.demo.version>
+	<noodlemonitor.assembly.version>1.0.0</noodlemonitor.assembly.version>
 	
   </properties>
 
@@ -163,5 +167,57 @@
 		
 	  </dependencies>
   </dependencyManagement>
+  
+  <build>
+    <plugins>
+      <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-source-plugin</artifactId>
+	      <executions>
+	        <execution>
+	          <phase>package</phase>
+	          <goals>
+	            <goal>jar</goal>
+	          </goals>
+	        </execution>
+	      </executions>
+	    </plugin>
+    </plugins>
+  </build>
+  
+  <profiles>
+		<profile>
+			<id>dev</id>
+			<build>
+				<filters>
+					<filter>${user.dir}/assembly/src/profile/env.properties.dev</filter>
+				</filters>
+			</build>
+		</profile>
+		<profile>
+			<id>test</id>
+			<build>
+				<filters>
+					<filter>${user.dir}/assembly/src/profile/env.properties.test</filter>
+				</filters>
+			</build>
+		</profile>
+		<profile>
+			<id>image</id>
+			<build>
+				<filters>
+					<filter>${user.dir}/assembly/src/profile/env.properties.image</filter>
+				</filters>
+			</build>
+		</profile>
+		<profile>
+			<id>product</id>
+			<build>
+				<filters>
+					<filter>${user.dir}/assembly/src/profile/env.properties.product</filter>
+				</filters>
+			</build>
+		 </profile>
+	</profiles>
   
 </project>
