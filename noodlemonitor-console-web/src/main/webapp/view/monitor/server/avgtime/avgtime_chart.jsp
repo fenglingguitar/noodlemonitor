@@ -251,20 +251,20 @@
 		
 		function treeHighlightEvent(data, label, node) {
 			
-			var pppppid = node.parent.parent.parent.parent.parent.data.id;			
-			var ppppid = node.parent.parent.parent.parent.data.id;
+			//var pppppid = node.parent.parent.parent.parent.parent.data.id;			
+			//var ppppid = node.parent.parent.parent.parent.data.id;
 			var pppid = node.parent.parent.data.pid;
 			var ppid = node.parent.data.pid;
 			var pid = data.pid;
 			var id = data.id;
 			
-			var divId = pppppid.replace(/\W/g, '') + '_' + 
-						ppppid.replace(/\W/g, '') + '_' + 
-						pppid.replace(/\W/g, '') + '_' + 
+			var divId = /* pppppid.replace(/\W/g, '') + '_' + 
+						ppppid.replace(/\W/g, '') + '_' + */ 
+						pppid.replace(/\W/g, '') + '_' +
 						ppid.replace(/\W/g, '') + '_' + 
 						pid.replace(/\W/g, '') + '_' + 
 						id.replace(/\W/g, '');
-			var title = node.parent.parent.parent.label.substring(0, node.parent.parent.parent.label.indexOf('(')) + '-' + 
+			var title = //node.parent.parent.parent.label.substring(0, node.parent.parent.parent.label.indexOf('(')) + '-' + 
 						node.parent.parent.label + '-' + 
 						node.parent.label + '-' + 
 						label;
@@ -276,12 +276,12 @@
 						renderTo: divId,
 						title: title,
 						input: {
-							monitorType: pppppid,
-							themeName: pppid,
-							selfModuleType: node.parent.data.other,
-							selfModuleId: pid,
+							monitorType: pppid,
+							themeName: id,
+							selfModuleType: 'DEFAULT',
+							selfModuleId: 0,
 							moduleType: data.other,
-							moduleId: id
+							moduleId: pid
 						}
 					});
 					chartInfoMap.put(divId, {
@@ -289,12 +289,12 @@
 						renderTo: divId,
 						title: title,
 						input: {
-							monitorType: pppppid,
-							themeName: pppid,
-							selfModuleType: node.parent.data.other,
-							selfModuleId: pid,
+							monitorType: pppid,
+							themeName: id,
+							selfModuleType: 'DEFAULT',
+							selfModuleId: 0,
 							moduleType: data.other,
-							moduleId: id
+							moduleId: pid
 						}
 					});
 				}					
