@@ -119,7 +119,7 @@
   
   <build>
   	
-    <finalName>noodlemonitor</finalName>
+    <finalName>noodlemonitor-console-web</finalName>
     
     <plugins>
 				

@@ -17,7 +17,6 @@
 			<exclude>WEB-INF/lib/**</exclude>
 			<exclude>WEB-INF/classes/logback.xml</exclude>
 			<exclude>WEB-INF/web.xml</exclude>
-			<exclude>WEB-INF/classes/.gitignore</exclude>
 		</excludes>
 		<fileMode>0644</fileMode>
 		<directoryMode>0755</directoryMode>

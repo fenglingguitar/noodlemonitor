@@ -33,7 +33,7 @@
 		<target>System.err</target>  
 	</appender>
 	
-	<logger name="org.fl.noodlecall" level="DEBUG" additivity="false">    
+	<logger name="org.fl.noodlemonitor" level="DEBUG" additivity="false">    
 		<appender-ref ref="STDOUT-APPENDER" /> 
 	</logger>
 	

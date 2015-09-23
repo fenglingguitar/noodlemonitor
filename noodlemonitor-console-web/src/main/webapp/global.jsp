@@ -4,7 +4,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
 	String commonPath = basePath + "/common";
-	String sysTitle = "noodlecall";
+	String sysTitle = "noodlemonitor";
 	request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
 %>
