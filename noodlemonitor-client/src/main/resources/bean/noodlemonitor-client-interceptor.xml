@@ -15,8 +15,8 @@
 
 	<bean id="udpClient" class="org.fl.noodle.common.monitor.performance.net.UdpClient"
 		init-method="start" destroy-method="destroy" >
-		<property name="ip" value="${console.udp.ip}" />
-		<property name="port" value="${console.udp.port}" />
+		<property name="ip" value="${noodlemonitor.console.udp.ip}" />
+		<property name="port" value="${noodlemonitor.console.udp.port}" />
 	</bean>
 
 	<bean id="monitorInterceptor" class="org.fl.noodlemonitor.client.interceptor.MonitorInterceptor" />

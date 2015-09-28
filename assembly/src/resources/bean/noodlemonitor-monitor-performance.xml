@@ -14,8 +14,8 @@
 	
 	<bean id="performancePersistence" class="org.fl.noodle.common.monitor.performance.persistence.redis.RedisPerformancePersistence" 
 		init-method="start" destroy-method="destroy" >
-		<property name="ip" value="${console.redis.ip}"/>
-		<property name="port" value="${console.redis.port}"/>
+		<property name="ip" value="${noodlemonitor.console.redis.ip}"/>
+		<property name="port" value="${noodlemonitor.console.redis.port}"/>
 		<property name="maxActive" value="500"/>
 		<property name="minIdle" value="100"/>
 		<property name="maxWait" value="3000"/>
@@ -24,7 +24,7 @@
 	
 	<bean id="udpServer" class="org.fl.noodle.common.monitor.performance.net.UdpServer"
 		init-method="start" destroy-method="destroy" >
-		<property name="port" value="${console.udp.port}" />
+		<property name="port" value="${noodlemonitor.console.udp.port}" />
 	</bean>
 	
 	<bean id="performanceReceiver" class="org.fl.noodle.common.monitor.performance.receiver.PerformanceReceiver" 
