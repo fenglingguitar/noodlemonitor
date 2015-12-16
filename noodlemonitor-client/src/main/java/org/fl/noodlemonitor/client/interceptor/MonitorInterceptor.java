@@ -1,6 +1,5 @@
 package org.fl.noodlemonitor.client.interceptor;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -8,6 +7,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.fl.noodle.common.connect.expand.monitor.PerformanceMonitor;
 import org.fl.noodle.common.connect.expand.monitor.constent.ModuleType;
 import org.fl.noodle.common.connect.expand.monitor.constent.MonitorType;
+import org.fl.noodle.common.util.net.NetAddressUtil;
 import org.fl.noodlemonitor.client.util.NetServiceTools;
 
 public class MonitorInterceptor implements MethodInterceptor {
@@ -17,7 +17,7 @@ public class MonitorInterceptor implements MethodInterceptor {
 	private long threshold = 200;
 	
 	public MonitorInterceptor() throws UnknownHostException {
-		this.hostIp = InetAddress.getLocalHost().getHostAddress();
+		this.hostIp = NetAddressUtil.getLocalIp();
 	}
 	
     public Object invoke(MethodInvocation invocation) throws Throwable {
