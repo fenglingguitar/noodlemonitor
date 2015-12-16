@@ -26,14 +26,18 @@ public class MonitorInterceptor implements MethodInterceptor {
     	
     	performanceMonitor.before(invokerKey, MonitorType.CONNECT.getCode(), ModuleType.SERVER.getCode(), hostIp);
     	
+    	Object result = null;
+    	
         try {
-        	return invocation.proceed();
+        	result = invocation.proceed();
         } catch(Throwable e) {        	
             performanceMonitor.after("", invokerKey, MonitorType.CONNECT.getCode(), ModuleType.SERVER.getCode(), hostIp, threshold, false);
-        } finally {
-            performanceMonitor.after("", invokerKey, MonitorType.CONNECT.getCode(), ModuleType.SERVER.getCode(), hostIp, threshold, true);
-        }
-		return null;        
+            throw e;
+        } 
+        
+        performanceMonitor.after("", invokerKey, MonitorType.CONNECT.getCode(), ModuleType.SERVER.getCode(), hostIp, threshold, true);
+
+        return result;        
     }
 
 	public void setPerformanceMonitor(PerformanceMonitor performanceMonitor) {
