@@ -4,7 +4,7 @@
 
   <groupId>org.fl.noodlemonitor</groupId>
   <artifactId>noodlemonitor</artifactId>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>2.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>noodlemonitor</name>
@@ -22,12 +22,12 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	
 	<noodlemonitor.name>noodlemonitor</noodlemonitor.name>
-	<noodlemonitor.version>1.1.0-SNAPSHOT</noodlemonitor.version>
+	<noodlemonitor.version>2.0.0-SNAPSHOT</noodlemonitor.version>
 	
-  	<noodlemonitor.console.web.version>1.1.0-SNAPSHOT</noodlemonitor.console.web.version>
-	<noodlemonitor.client.version>1.1.0-SNAPSHOT</noodlemonitor.client.version>
-	<noodlemonitor.client.demo.version>1.1.0-SNAPSHOT</noodlemonitor.client.demo.version>
-	<noodlemonitor.assembly.version>1.1.0-SNAPSHOT</noodlemonitor.assembly.version>
+  	<noodlemonitor.console.web.version>2.0.0-SNAPSHOT</noodlemonitor.console.web.version>
+	<noodlemonitor.client.version>2.0.0-SNAPSHOT</noodlemonitor.client.version>
+	<noodlemonitor.client.demo.version>2.0.0-SNAPSHOT</noodlemonitor.client.demo.version>
+	<noodlemonitor.assembly.version>2.0.0-SNAPSHOT</noodlemonitor.assembly.version>
 	
   </properties>
 
@@ -37,25 +37,25 @@
 		<dependency>
 			<groupId>org.fl.noodle.common.mvc</groupId>
 			<artifactId>noodlecommon-mvc</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.fl.noodle.common.mvc.vo</groupId>
 			<artifactId>noodlecommon-mvc-vo</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 	  
 		<dependency>
 			<groupId>org.fl.noodle.common.monitor</groupId>
 			<artifactId>noodlecommon-monitor-api</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.fl.noodle.common.monitor.performance</groupId>
 			<artifactId>noodlecommon-monitor-performance</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
